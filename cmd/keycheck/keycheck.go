@@ -26,7 +26,6 @@ func main() {
 	}
 
 	// Open file and read content.
-	fmt.Printf("reading...\n")
 	file, err := os.Open(fileName)
 	if err != nil {
 		fmt.Printf("error reading file %s, %s\n", fileName, err)
@@ -46,7 +45,6 @@ func main() {
 	buf = buf[:n]
 
 	// Password-decrypt the content.
-	fmt.Printf("asking password...\n")
 	password, err := util.ReadPassword()
 	fmt.Printf("\n")
 	var keyBytes []byte
@@ -62,7 +60,6 @@ func main() {
 	}
 
 	// Deserialize and verify.
-	fmt.Printf("deserializing and verifying...\n")
 	reader := gob.NewDecoder(bytes.NewReader(keyBytes))
 	var key rsa.PrivateKey
 	err = reader.Decode(&key)
