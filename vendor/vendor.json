@@ -1,0 +1,25 @@
+{
+	"comment": "",
+	"ignore": "test",
+	"package": [
+		{
+			"checksumSHA1": "BSPDVKviqHQaG2phOFN690zAKB8=",
+			"path": "golang.org/x/crypto/ssh/terminal",
+			"revision": "ff983b9c42bc9fbf91556e191cc8efb585c16908",
+			"revisionTime": "2018-07-25T11:53:45Z"
+		},
+		{
+			"checksumSHA1": "k92yD4WX8hB+IH3nuFma4OVoLSY=",
+			"path": "golang.org/x/sys/unix",
+			"revision": "11f53e03133963fb11ae0588e08b5e0b85be8be5",
+			"revisionTime": "2019-01-16T09:16:37Z"
+		},
+		{
+			"checksumSHA1": "Y7nctMxT58lRM78VtElPerhcnEs=",
+			"path": "golang.org/x/sys/windows",
+			"revision": "11f53e03133963fb11ae0588e08b5e0b85be8be5",
+			"revisionTime": "2019-01-16T09:16:37Z"
+		}
+	],
+	"rootPath": "github.com/regnull/raven"
+}
