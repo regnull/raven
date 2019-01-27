@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package pbraven;
+
+import "record.proto";
+import "signature.proto";
+
+message SignedRecord {
+  Record record = 1;
+  repeated Signature signature = 2;
+}

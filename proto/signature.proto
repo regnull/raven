@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package pbraven;
+
+enum SignatureAlgorithm {
+  SIG_NONE = 0;
+}
+
+message Signature {
+  string public_key = 1;
+  string signature = 2;
+}
