@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package pbraven;
+
+message Record {
+  string name = 1;
+  string destination = 2;
+  string recepient = 3;
+  string intermediary = 4;
+}
