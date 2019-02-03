@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package pbraven;
+
+enum PayloadType {
+  PAYLOAD_DATA = 0;     // Opaque data.
+  PAYLOAD_MESSAGE = 1;  // Wrapped message.
+}
+
+message Message {
+  int32 version = 1;    // Protocol version.
+  bytes sender = 2;     // Public key.
+  bytes receiver = 3;   // Public key.
+  bytes signature = 4;  // Hash of payload signed with sender private key.
+  PayloadType payload_type = 5;
+  bytes payload = 6;    // Encrypted with receiver public key.
+}
