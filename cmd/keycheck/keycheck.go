@@ -1,9 +1,6 @@
 package main
 
 import (
-	"bytes"
-	"crypto/rsa"
-	"encoding/gob"
 	"flag"
 	"fmt"
 	"os"
@@ -25,46 +22,13 @@ func main() {
 		os.Exit(1)
 	}
 
-	// Open file and read content.
-	file, err := os.Open(fileName)
+	key, err := util.ReadKey(fileName, func() (string, error) {
+		password, err := util.ReadPassword()
+		fmt.Printf("\n")
+		return password, err
+	})
 	if err != nil {
-		fmt.Printf("error reading file %s, %s\n", fileName, err)
-		os.Exit(1)
-	}
-
-	buf := make([]byte, maxFileSize)
-	n, err := file.Read(buf)
-	if err != nil {
-		fmt.Printf("error reading file %s, %s\n", fileName, err)
-		os.Exit(1)
-	}
-	if n == 0 {
-		fmt.Printf("zero bytes read\n")
-		os.Exit(1)
-	}
-	buf = buf[:n]
-
-	// Password-decrypt the content.
-	password, err := util.ReadPassword()
-	fmt.Printf("\n")
-	var keyBytes []byte
-	if password != "" {
-		passwordEncryptionKey := util.KeyFromString(password)
-		keyBytes, err = util.Decrypt(buf, passwordEncryptionKey)
-		if err != nil {
-			fmt.Printf("decryption failed: %s\n", err)
-			os.Exit(1)
-		}
-	} else {
-		keyBytes = buf
-	}
-
-	// Deserialize and verify.
-	reader := gob.NewDecoder(bytes.NewReader(keyBytes))
-	var key rsa.PrivateKey
-	err = reader.Decode(&key)
-	if err != nil {
-		fmt.Printf("error deserializing the key: %s\n", err)
+		fmt.Printf("%s\n", err)
 		os.Exit(1)
 	}
 
