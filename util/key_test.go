@@ -40,7 +40,17 @@ func TestSerializeKeyPem(t *testing.T) {
 	assert.Nil(t, err)
 	assert.NotNil(t, key)
 	bytes, err := SerializeKeyPem(key)
-	fmt.Printf("%s\n", string(bytes))
+	assert.Nil(t, err)
+	assert.NotNil(t, key)
+	assert.True(t, len(bytes) > 10)
+}
+
+func TestSerializePublicKeyPem(t *testing.T) {
+	reader := rand.Reader
+	key, err := rsa.GenerateKey(reader, 1024)
+	assert.Nil(t, err)
+	assert.NotNil(t, key)
+	bytes, err := SerializePublicKeyPem(&key.PublicKey)
 	assert.Nil(t, err)
 	assert.NotNil(t, key)
 	assert.True(t, len(bytes) > 10)
