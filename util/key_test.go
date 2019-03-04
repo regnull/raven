@@ -1,6 +1,9 @@
 package util
 
 import (
+	"crypto/rand"
+	"crypto/rsa"
+	"fmt"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -18,4 +21,27 @@ func TestReadKeyWithPassword(t *testing.T) {
 	})
 	assert.Nil(t, err)
 	assert.NotNil(t, key)
+}
+
+func TestSerializeKeyGob(t *testing.T) {
+	reader := rand.Reader
+	key, err := rsa.GenerateKey(reader, 1024)
+	assert.Nil(t, err)
+	assert.NotNil(t, key)
+	bytes, err := SerializeKeyGob(key)
+	assert.Nil(t, err)
+	assert.NotNil(t, key)
+	assert.True(t, len(bytes) > 10)
+}
+
+func TestSerializeKeyPem(t *testing.T) {
+	reader := rand.Reader
+	key, err := rsa.GenerateKey(reader, 1024)
+	assert.Nil(t, err)
+	assert.NotNil(t, key)
+	bytes, err := SerializeKeyPem(key)
+	fmt.Printf("%s\n", string(bytes))
+	assert.Nil(t, err)
+	assert.NotNil(t, key)
+	assert.True(t, len(bytes) > 10)
 }
