@@ -1,7 +1,6 @@
 package util
 
 import (
-	"bufio"
 	"bytes"
 	"crypto/rsa"
 	"crypto/x509"
@@ -88,15 +87,7 @@ func SerializeKeyPem(key *rsa.PrivateKey) ([]byte, error) {
 		Type:  "PRIVATE KEY",
 		Bytes: x509.MarshalPKCS1PrivateKey(key),
 	}
-
-	var buf bytes.Buffer
-	writer := bufio.NewWriter(&buf)
-	err := pem.Encode(writer, pemKey)
-	if err != nil {
-		return nil, fmt.Errorf("encoding failed: %s", err)
-	}
-	writer.Flush()
-	return buf.Bytes(), nil
+	return pem.EncodeToMemory(pemKey), nil
 }
 
 // SerializePublicKeyPem serializes public key using PEM format.
@@ -109,12 +100,5 @@ func SerializePublicKeyPem(key *rsa.PublicKey) ([]byte, error) {
 		Type:  "PUBLIC KEY",
 		Bytes: asn1Bytes,
 	}
-	var buf bytes.Buffer
-	writer := bufio.NewWriter(&buf)
-	err = pem.Encode(writer, pemKey)
-	if err != nil {
-		return nil, fmt.Errorf("encoding failed: %s", err)
-	}
-	writer.Flush()
-	return buf.Bytes(), nil
+	return pem.EncodeToMemory(pemKey), nil
 }

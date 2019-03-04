@@ -3,7 +3,6 @@ package util
 import (
 	"crypto/rand"
 	"crypto/rsa"
-	"fmt"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
