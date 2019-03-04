@@ -102,3 +102,26 @@ func SerializePublicKeyPem(key *rsa.PublicKey) ([]byte, error) {
 	}
 	return pem.EncodeToMemory(pemKey), nil
 }
+
+func ParsePemPublicKey(pemBytes []byte) (*rsa.PublicKey, error) {
+	block, _ := pem.Decode(pemBytes)
+	if block == nil {
+		return nil, fmt.Errorf("no key found")
+	}
+
+	switch block.Type {
+	case "PUBLIC KEY":
+		key, err := x509.ParsePKIXPublicKey(block.Bytes)
+		if err != nil {
+			return nil, err
+		}
+		switch key.(type) {
+		case *rsa.PublicKey:
+			return key.(*rsa.PublicKey), nil
+		default:
+			return nil, fmt.Errorf("unsupported key type")
+		}
+	default:
+		return nil, fmt.Errorf("unsupported key type %q", block.Type)
+	}
+}
