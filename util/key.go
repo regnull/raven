@@ -125,3 +125,21 @@ func ParsePemPublicKey(pemBytes []byte) (*rsa.PublicKey, error) {
 		return nil, fmt.Errorf("unsupported key type %q", block.Type)
 	}
 }
+
+func ParsePemPrivateKey(pemBytes []byte) (*rsa.PrivateKey, error) {
+	block, _ := pem.Decode(pemBytes)
+	if block == nil {
+		return nil, fmt.Errorf("no key found")
+	}
+
+	switch block.Type {
+	case "PRIVATE KEY":
+		key, err := x509.ParsePKCS1PrivateKey(block.Bytes)
+		if err != nil {
+			return nil, err
+		}
+		return key, nil
+	default:
+		return nil, fmt.Errorf("unsupported key type %q", block.Type)
+	}
+}

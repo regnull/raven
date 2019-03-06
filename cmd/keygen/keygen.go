@@ -1,15 +1,12 @@
 package main
 
 import (
-	"bytes"
 	"flag"
 	"fmt"
 	"os"
 
 	"crypto/rand"
 	"crypto/rsa"
-
-	"encoding/gob"
 
 	"github.com/regnull/raven/util"
 )
@@ -38,29 +35,21 @@ func main() {
 		os.Exit(1)
 	}
 
-	// Write key bytes into a buffer.
-	var buf bytes.Buffer
-	encoder := gob.NewEncoder(&buf)
-	err = encoder.Encode(key)
-	if err != nil {
-		fmt.Printf("encoding failed: %s\n", err)
-		os.Exit(1)
-	}
+	// PEM serialize.
+	outputBytes, _ := util.SerializeKeyPem(key)
 
 	// Encrypt with password.
 	password, err := util.ReadPassword()
 	fmt.Printf("\n")
-	var outputBytes []byte
 	if password != "" {
 		passwordEncryptionKey := util.KeyFromString(password)
-		outputBytes, err = util.Encrypt(buf.Bytes(), passwordEncryptionKey)
+		outputBytes, err = util.Encrypt(outputBytes, passwordEncryptionKey)
 		if err != nil {
 			fmt.Printf("encryption failed: %s\n", err)
 			os.Exit(1)
 		}
 	} else {
 		fmt.Printf("WARNING: private key is not encrypted\n")
-		outputBytes = buf.Bytes()
 	}
 
 	// Write output to the file.
