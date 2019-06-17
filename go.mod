@@ -4,7 +4,7 @@ go 1.12
 
 require (
 	github.com/davecgh/go-spew v1.1.0
-	github.com/golang/protobuf v1.2.0
+	github.com/golang/protobuf v1.3.1
 	github.com/pmezard/go-difflib v1.0.0
 	github.com/stretchr/testify v0.0.0-20190109162356-363ebb24d041
 	golang.org/x/crypto v0.0.0-20190103213133-ff983b9c42bc
