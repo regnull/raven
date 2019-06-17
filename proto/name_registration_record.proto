@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package pbraven;
+
+message NameRegistrationRecord {
+  // Name to be registered.
+  string name = 1;
+
+  // Destination address.
+  string destination = 2;
+
+  // The ultimate recepient's public key.
+  string recipient = 3;
+
+  // Extra information.
+  string description = 4;
+
+  int64 proof_of_work = 5;
+}

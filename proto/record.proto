@@ -1,19 +1,9 @@
 syntax = "proto3";
 
+import "name_registration_record.proto";
+
 package pbraven;
 
 message Record {
-  // Registered name.
-  string name = 1;
-
-  // TCP address.
-  string destination = 2;
-
-  // The ultimate recepient's public key.
-  string recipient = 3;
-
-  // Third party authorized to receive messages
-  // on behalf of recipient.
-  // Public key.
-  string intermediary = 4;
+  NameRegistrationRecord name_registration_record = 1;
 }
